@@ -19,11 +19,6 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
   this.stomach = [];
-  this.eat = function(food){
-    if (this.stomach.length !== 10){
-      this.stomach.push(food)
-    }
-  },
   this.poop = function(){
     this.stomach = [];
   },
@@ -32,6 +27,19 @@ function Person(name, age) {
   }
 }
 
+Person.prototype.eat = function(food){
+  if (this.stomach.length !== 10){
+    this.stomach.push(food)
+  }
+}
+
+Person.prototype.poop = function(){
+  this.stomach = [];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`
+}
 
 /*
   TASK 2
@@ -50,17 +58,17 @@ function Person(name, age) {
 */
 
 function Car(model, milesPerGallon) {
-this.model = model
-this.milesPerGallon = milesPerGallon
-this.tank = 0,
-this.odometer = 0,
-this.fill = function(gallons){
+  this.model = model
+  this.milesPerGallon = milesPerGallon
+  this.tank = 0;
+  this.odometer = 0;
+}
+
+Car.prototype.fill = function(gallons){
   if(gallons > 0){
     this.tank += gallons;
-    }
   }
-};
-
+}
 
 /*
   TASK 3
@@ -71,13 +79,19 @@ this.fill = function(gallons){
 */
 
 function Baby(name, age, favoriteToy) {
-this.name = name,
-this.age = age,
-this.favoriteToy = favoriteToy,
-this.play = function(){
-  return `Playing with ${favoriteToy}`
-  }
+  Person.call(this, name, age);
+  this.name = name;
+  this.age = age;
+  this.favoriteToy = favoriteToy;
 };
+
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`
+}
+
+
 
 /* 
   TASK 4
